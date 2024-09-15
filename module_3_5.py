@@ -1,19 +1,20 @@
 def get_multiplied_digits(number):
     str_number = str(number)
     first = int(str_number[0])
+    global recursion_level
     if len(str_number) > 1:
-        if int(str_number[:-1]) != 0:
-            return first * get_multiplied_digits(int(str_number[1:]))
-        else:
-
+        recursion_level += 1
+        return first * get_multiplied_digits(int(str_number[1:]))
     else:
-        return first
+        if first == 0:
+            if recursion_level == 0:
+                return 0
+            else:
+                return 1
+        else:
+            return first
 
-result1 = get_multiplied_digits(40203)
-print(result1)
-result2 = get_multiplied_digits(3)
-print(result2)
-result3 = get_multiplied_digits(330)
-print(result3)
-result4 = get_multiplied_digits(0)
-print(result4)
+
+recursion_level = 0
+result = get_multiplied_digits(402030)
+print(result)
