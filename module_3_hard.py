@@ -1,26 +1,19 @@
-
-def calculate_structure_sum(*args):
-    summ = 0
-    if not args:
-        return 0
+def calculate_structure_sum(data):
+    global summ
+    if isinstance(data, int):
+        summ += data
+        return summ
+    elif isinstance(data, str):
+        summ += len(data)
+        return summ
     else:
-        for i in args:
-            if isinstance(i, int):
-                summ += i
-                return summ
-            elif isinstance(i, str):
-                summ += len(i)
-                return summ
-            elif isinstance(i, list):
-                calculate_structure_sum(i)
-            elif isinstance(i, dict):
+        for i in data:
+            if isinstance(i, dict):
                 for key in i.keys():
-                    summ += len(key)
-                    return summ
+                    calculate_structure_sum(key)
                 for value in i.values():
-                    summ += value
-                    return summ
-            elif isinstance(i, tuple):
+                    calculate_structure_sum(value)
+            else:
                 calculate_structure_sum(i)
 
 data_structure = [
@@ -30,5 +23,6 @@ data_structure = [
   "Hello",
   ((), [{(2, 'Urban', ('Urban2', 35))}])
 ]
-
-print('Сумма', calculate_structure_sum(data_structure))
+summ = 0
+calculate_structure_sum(data_structure)
+print('Сумма', summ)
